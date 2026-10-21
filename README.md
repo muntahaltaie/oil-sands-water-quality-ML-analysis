@@ -1,4 +1,4 @@
-# DATA-501-DASHBOARD
+# Environmental ML Analytics
 
 ## Oil Sands Lake Analysis Dashboard
 
