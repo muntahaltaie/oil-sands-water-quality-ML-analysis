@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.figure_factory as ff
 import math
 
 from sklearn.decomposition import PCA
@@ -315,7 +314,7 @@ with tab1:
         .reset_index(name="Samples")
     )
 
-    fig_map = px.scatter_mapbox(
+    fig_map = px.scatter_map(
         map_df,
         lat="Latitude",
         lon="Longitude",
@@ -334,7 +333,7 @@ with tab1:
     )
 
     # ADD AR6 
-    fig_map.add_scattermapbox(
+    fig_map.add_scattermap(
         lat=[57.02],
         lon=[-111.50],
         mode="markers+text",
@@ -350,7 +349,7 @@ with tab1:
 
     # Dark theme
     fig_map.update_layout(
-        mapbox_style="carto-darkmatter",
+        map_style="carto-darkmatter",
         margin=dict(l=0, r=0, t=40, b=0)
     )
 
@@ -762,12 +761,13 @@ with tab5:
             labels = sorted(y.unique().tolist())
             cm = confusion_matrix(y_test, y_pred, labels=labels)
 
-            fig_cm = ff.create_annotated_heatmap(
-                z=cm,
+            fig_cm = px.imshow(
+                cm,
                 x=labels,
                 y=labels,
-                colorscale="Blues",
-                showscale=True
+                text_auto=True,
+                color_continuous_scale="Blues",
+                labels={"x": "Predicted", "y": "Actual", "color": "Count"}
             )
             fig_cm.update_layout(
                 title="Confusion Matrix",
